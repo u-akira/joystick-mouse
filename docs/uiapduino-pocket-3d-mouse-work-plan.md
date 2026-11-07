@@ -15,12 +15,21 @@ KY-023ジョイスティックと2ピンタクトスイッチを使い、UIAPdui
 - OLED構成では外付けタクトをD5、KY-023押し込みをD7へ移動
 - Wokwi用のOLED参考図と確認スケッチを追加
 
+### 2026-11-03更新
+
+- `uiapduino-pocket-3d-mouse/uiapduino-pocket-3d-mouse.ino`を作成
+- UIAP_HIDのKeyboard+Mouseモードでコンパイル
+- 短いUSBケーブルで実機への`Image written.`を確認
+- Windows HID認識とFusion 360上の操作確認は次の段階
+
 ## 2. 現在の進捗
 
 - [x] UIAPduinoのWindows認識を確認
 - [x] Arduino IDEからの書き込みを確認
 - [x] Arduino CLIからのサンプル書き込みを確認
 - [x] ブートローダー検出と`Image written.`を確認
+- [x] ジョイスティックマウス用スケッチを作成・コンパイル
+- [x] 実機へジョイスティックマウス用スケッチを書き込み
 - [ ] KY-023の配線を確定
 - [ ] タクトスイッチ入力を確認
 - [ ] アナログ入力を確認

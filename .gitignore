@@ -1,5 +1,5 @@
 # Arduino CLI / Arduino IDE generated state
-.arduino-build/
+.arduino-build*/
 .arduino-cli/
 arduino-build/
 arduino-cli/

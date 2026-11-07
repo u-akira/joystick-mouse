@@ -4,8 +4,8 @@
 
 | 項目 | 内容 |
 |---|---|
-| 文書状態 | OLED参考構成追加（Spec v0.3） |
-| 作成日 | 2026-10-28 |
+| 文書状態 | HID実装・実機書き込み記録追加（Spec v0.4） |
+| 作成日 | 2026-10-28（2026-11-03更新） |
 | 対象 | Printables「Pocket 3D Mouse」相当のFusion 360用左手コントローラー |
 | マイコン | UIAPduino Pro Micro CH32V003 V1.4 |
 | 接続方式 | USB有線 |
@@ -19,6 +19,14 @@
 - UIAPduinoの標準`Wire`設定をSDA=D3、SCL=D4として記載
 - OLED追加時の入力ピン案を外付けタクト=D5、KY-023 SW=D7として記載
 - Wokwi用のOLED参考図・スケッチへのリンクを追加
+
+### v0.4の更新内容
+
+- `uiapduino-pocket-3d-mouse/uiapduino-pocket-3d-mouse.ino`を作成
+- UIAP_HIDのKeyboard+Mouseモードでコンパイル成功
+- Flash 8,624 / 16,384バイト、RAM 224 / 2,048バイト
+- 短いUSBケーブルへの変更後、`Image written.`まで到達
+- Fusion 360上の最終的な方向・感度・HID操作は未確認
 
 ## 2. 目的
 
@@ -117,9 +125,17 @@ UIAPduinoの電源設定は、まず5 V設定を前提とする。3.3 V設定で
 
 ### 6.3 HID実装の確認事項
 
-UIAPduinoへの書き込み自体はArduino IDEおよびArduino CLIで成功している。ただし、CH32V003向けの標準Arduino環境で`Mouse`および`Keyboard`がそのまま使用できるかは、別途確認が必要である。
+実機用スケッチは、UIAP_HIDボードパッケージの`Keyboard`および`Mouse`ライブラリを使用する。USBモードは`Keyboard+Mouse`を選択する。
 
-必要に応じて、UIAPduino CH32V003向けのHIDパッケージを採用し、Keyboard + Mouseモードで検証する。
+実装済みの動作は次のとおりである。
+
+- 起動時にジョイスティック中央値を取得
+- 中央付近の不感帯と速度スケーリング
+- D5を押していないときは中ボタンによるパン
+- D5を押しているときはShift＋中ボタンによるオービット
+- 中央復帰時とモード変更時のボタン解放
+
+コンパイルと実機への書き込みは完了している。Windowsのデバイス一覧およびFusion 360上での操作確認は未完了である。
 
 ### 6.4 OLED表示（参考構成）
 
@@ -176,16 +192,18 @@ WokwiのArduino NanoではI2CピンがA4/A5になるため、実機のD3/D4と�
 - Arduino IDE経由の書き込みに成功している
 - Arduino CLI経由のサンプルスケッチ書き込みに成功している
 - ブートローダー検出後に`Image written.`まで到達している
+- UIAP_HID 1.2.15のKeyboard+Mouseモードで実機用スケッチをコンパイルできる
+- 実機用スケッチを短いUSBケーブルで書き込みできる
 
 ### 8.2 現在の書き込み対象
 
-現在は以下のボード設定で書き込みを行っている。
+実機用スケッチは以下のボード設定で書き込む。
 
 ```text
-UIAP:ch32v:CH32V00x_EVT:pnum=CH32V003V1DOT4,upload_method=minichlink
+UIAP_HID:ch32v:CH32V003:pnum=V14,clock=48MHz_HSI,usb=kbd,xserial=none,opt=oslto,dbg=none,rtlib=none,upload_method=minichlink,pwm=default
 ```
 
-HID対応パッケージを採用する場合は、ボードパッケージとFQBNが変わる可能性があるため、HIDテスト時に再確認する。
+配線確認用の標準UIAPコアと、実機用HIDスケッチのUIAP_HIDコアは別のFQBNである。
 
 ## 9. 受け入れ条件
 
@@ -215,9 +233,9 @@ HID対応パッケージを採用する場合は、ボードパッケージとFQ
 
 1. KY-023のVRX・VRYを読み取り、中央値と操作方向を確認する
 2. D5のタクトスイッチ入力とチャタリング除去を確認する
-3. UIAPduinoでMouse + Keyboard HIDの最小テストを行う
-4. パン操作を実装する
-5. Shift + 中ボタンによるオービット操作を実装する
+3. WindowsでKeyboard + Mouse HIDとして認識されることを確認する
+4. Fusion 360でパン操作を確認する
+5. Shift + 中ボタンによるオービット操作を確認する
 6. 感度・不感帯・軸方向を調整する
 7. 筐体寸法を測定してCADを修正する
 
