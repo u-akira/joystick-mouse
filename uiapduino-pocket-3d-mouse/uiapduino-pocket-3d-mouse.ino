@@ -32,10 +32,12 @@ constexpr int DEADZONE = 100;
 constexpr int MAX_MOTION = 8;
 constexpr unsigned long UPDATE_INTERVAL_MS = 10;
 constexpr unsigned long DEBOUNCE_MS = 25;
+constexpr unsigned long HID_REPORT_SETTLE_MS = 20;
 
 // Fusion 360で方向が逆に感じる場合は、該当値をtrueに変更する。
 constexpr bool INVERT_X = false;
 constexpr bool INVERT_Y = true;
+constexpr bool SWAP_XY = true;
 
 int centerX = 512;
 int centerY = 512;
@@ -121,6 +123,7 @@ void beginNavigation(bool orbitMode) {
   if (orbitMode) {
     Keyboard.press(KEY_LEFT_SHIFT);
     orbitModeActive = true;
+    delay(HID_REPORT_SETTLE_MS);
   }
 
   Mouse.press(MOUSE_MIDDLE);
@@ -133,6 +136,9 @@ void changeNavigationMode(bool orbitMode) {
   }
 
   releaseNavigation();
+  if (!orbitMode) {
+    delay(HID_REPORT_SETTLE_MS);
+  }
   beginNavigation(orbitMode);
 }
 
@@ -183,5 +189,7 @@ void loop() {
     changeNavigationMode(orbitMode);
   }
 
-  Mouse.move(xMotion, yMotion);
+  const int mouseXMotion = SWAP_XY ? yMotion : xMotion;
+  const int mouseYMotion = SWAP_XY ? xMotion : yMotion;
+  Mouse.move(mouseXMotion, mouseYMotion);
 }
