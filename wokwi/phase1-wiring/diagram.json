@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "author": "UIAPduino Pocket 3D Mouse",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "wokwi-arduino-nano",
+      "id": "nano",
+      "top": 20,
+      "left": 180,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-analog-joystick",
+      "id": "joystick1",
+      "top": -20,
+      "left": -130,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-pushbutton-6mm",
+      "id": "button1",
+      "top": 190,
+      "left": -90,
+      "attrs": {
+        "color": "blue",
+        "label": "D5 / GND",
+        "key": "B",
+        "bounce": "0"
+      }
+    }
+  ],
+  "connections": [
+    [ "joystick1:VCC", "nano:5V", "red", [] ],
+    [ "joystick1:GND", "nano:GND.1", "black", [] ],
+    [ "joystick1:HORZ", "nano:A0", "green", [] ],
+    [ "joystick1:VERT", "nano:A1", "blue", [] ],
+    [ "joystick1:SEL", "nano:7", "purple", [] ],
+    [ "button1:1.l", "nano:5", "yellow", [] ],
+    [ "button1:2.l", "nano:GND.2", "black", [] ]
+  ],
+  "dependencies": {}
+}

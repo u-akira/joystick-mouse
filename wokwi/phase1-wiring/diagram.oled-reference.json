@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "author": "UIAPduino Pocket 3D Mouse - OLED reference",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "wokwi-arduino-nano",
+      "id": "nano",
+      "top": 45,
+      "left": 240,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-analog-joystick",
+      "id": "joystick1",
+      "top": -35,
+      "left": -150,
+      "attrs": {
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "wokwi-pushbutton-6mm",
+      "id": "button1",
+      "top": 220,
+      "left": -110,
+      "attrs": {
+        "color": "blue",
+        "label": "D5 / GND",
+        "key": "B",
+        "bounce": "0"
+      }
+    },
+    {
+      "type": "board-ssd1306",
+      "id": "oled1",
+      "top": -15,
+      "left": 340,
+      "attrs": {
+        "i2cAddress": "0x3c"
+      }
+    }
+  ],
+  "connections": [
+    [ "joystick1:VCC", "nano:5V", "red", [] ],
+    [ "joystick1:GND", "nano:GND.1", "black", [] ],
+    [ "joystick1:HORZ", "nano:A0", "green", [] ],
+    [ "joystick1:VERT", "nano:A1", "blue", [] ],
+    [ "joystick1:SEL", "nano:7", "purple", [] ],
+    [ "button1:1.l", "nano:5", "yellow", [] ],
+    [ "button1:2.l", "nano:GND.2", "black", [] ],
+    [ "oled1:VCC", "nano:5V", "red", [] ],
+    [ "oled1:GND", "nano:GND.2", "black", [] ],
+    [ "oled1:SDA", "nano:A4", "green", [] ],
+    [ "oled1:SCL", "nano:A5", "blue", [] ]
+  ],
+  "dependencies": {}
+}

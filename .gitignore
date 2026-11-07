@@ -1,5 +1,5 @@
 # Arduino CLI / Arduino IDE generated state
-.arduino-build*/
+.arduino-build/
 .arduino-cli/
 arduino-build/
 arduino-cli/
@@ -11,10 +11,6 @@ build/
 *.hex
 *.bin
 *.map
-
-# Eagle CAD source files are maintained in the upstream UIAP-Devices repository
-*.brd
-*.sch
 
 # Local editor and OS files
 .vscode/*.user
