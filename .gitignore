@@ -12,6 +12,10 @@ build/
 *.bin
 *.map
 
+# Eagle CAD source files are maintained in the upstream UIAP-Devices repository
+*.brd
+*.sch
+
 # Local editor and OS files
 .vscode/*.user
 .DS_Store

@@ -217,3 +217,24 @@ def run(_context: str):
 
 この結果の部品原点・包絡寸法を第5節に集計し、Electronicsの登録情報と照合した。寸法の取得成功は実物寸法の検証完了を意味しない。
 
+## 10. Upstream EAGLE設計資料
+
+UIAPduino Pro Micro CH32V003 V1.4の設計資料は、[UIAP-Devicesのv1dot4ディレクトリ](https://github.com/YuukiUmeta-UIAP/UIAP-Devices/tree/main/UIAPduino/pro-micro/ch32v003/v1dot4)で公開されている。[回路図](https://github.com/YuukiUmeta-UIAP/UIAP-Devices/blob/main/UIAPduino/pro-micro/ch32v003/v1dot4/UIAPduino_Pro_Micro.sch)と[基板データ](https://github.com/YuukiUmeta-UIAP/UIAP-Devices/blob/main/UIAPduino/pro-micro/ch32v003/v1dot4/UIAPduino_Pro_Micro.brd)はいずれもEAGLE 9.6.2形式。基板データの外形は17.78 × 33.02 mmで、取付穴は径1.70 mmが3か所。この資料は回路接続と基板レイアウトの参照元とし、寸法・3D形状の記録値はFusionモデルから取得した値として扱う。実機基板がこのリビジョンと一致するかは別途確認が必要。
+
+回路図から確認できる、本プロジェクトに関係する主な接続は次のとおり。
+
+| 基板上の接続 | 回路図のネット／用途 |
+|---|---|
+| CN4.7 | D0 / A1 |
+| CN4.8 | D1 / A0 |
+| CN3.5 | D5 |
+| CN4.9 / CN3.3 | SCK / D7 |
+| CN3.8 / CN2.3 | SDA / D3 |
+| CN3.7 / CN2.4 | SCL / D4 |
+| CN4.1 / CN4.2 / CN4.4 | +5 V / GND / +3.3 V |
+| CN2.1 / CN2.2 | GND / +3.3 V（SM04B-SR、4ピンJSTコネクタ） |
+
+したがって、KY-023のVRX/VRYはそれぞれ基板のA0/A1へ接続し、D5の外付けスイッチ、D7の予備入力、D3/D4のI²C配線は上表のネット名を基準にする。CN2の電源は+3.3 Vであり、+5 V端子とは別である。
+
+`.brd`と`.sch`のローカルコピーは作業用参照として残し、Jujutsuでは追跡しない。最新版のCAD原本は上記のupstream資料を参照する。
+
